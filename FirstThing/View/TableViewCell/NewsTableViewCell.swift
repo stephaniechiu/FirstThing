@@ -8,10 +8,10 @@
 
 import UIKit
 
-class NewsTableViewCell: UITableViewCell {
+class NewsDetailsTableViewCell: UITableViewCell {
 
 // MARK: - Properties
-    var descriptionText = UILabel()
+    var descriptionLabel = UILabel()
     var readMoreButton = UIButton()
     
 // MARK: - Init
@@ -20,11 +20,11 @@ class NewsTableViewCell: UITableViewCell {
         
         setupCellLayout()
         
-        addSubview(descriptionText)
-        descriptionText.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
+        addSubview(descriptionLabel)
+        descriptionLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingRight: 10)
         
         addSubview(readMoreButton)
-        readMoreButton.anchor(top: descriptionText.bottomAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingBottom: 10, paddingRight: 10)
+        readMoreButton.anchor(top: descriptionLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, paddingTop: 5, paddingLeft: 10, paddingBottom: 10)
         
     }
     
@@ -34,13 +34,14 @@ class NewsTableViewCell: UITableViewCell {
 
 // MARK: - Helper Functions
     func setupCellLayout() {
-        descriptionText.numberOfLines = 0
-        descriptionText.lineBreakMode = .byWordWrapping
-        descriptionText.textColor = .label
         
-        readMoreButton.titleLabel?.text = "Read More"
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.lineBreakMode = .byWordWrapping
+        descriptionLabel.textColor = .label
+        descriptionLabel.font = UIFont(name: "HelveticaNeue", size: 12)
+        
+        readMoreButton.setTitle("Read More", for: .normal)
         readMoreButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 12)
-        readMoreButton.titleLabel?.textColor = .label
-        readMoreButton.backgroundColor = .red
+        readMoreButton.setTitleColor(.label, for: .normal)
     }
 }

@@ -13,7 +13,8 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
 // MARK: - Properties
     let newsView = NewsView()
     let newsTableView = UITableView()
-    let cellReuseIdentifier = "NewsCell"
+    let titleCellID = "TitleCell"
+    let detailsCellID = "DetailsCell"
     private let newsURL = "https://newsapi.org/v2/top-headlines?country=us&apiKey=e2f0b28b0f0146dcb2b9c2ce5c3142a7"
     private var articles = [Articles]()
 
@@ -42,7 +43,8 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func setupTableView() {
         newsTableView.dataSource = self
         newsTableView.delegate = self
-        newsTableView.register(NewsTableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
+        newsTableView.register(NewsTitleTableViewCell.self, forCellReuseIdentifier: titleCellID)
+        newsTableView.register(NewsDetailsTableViewCell.self, forCellReuseIdentifier: detailsCellID)
         newsTableView.estimatedRowHeight = 50
         newsTableView.rowHeight = UITableView.automaticDimension
     }
@@ -86,7 +88,6 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             for jsonArticle in jsonArticles {
                 var article = Articles()
-                article.author = jsonArticle["author"] as? String
                 article.title = jsonArticle["title"] as? String ?? ""
                 article.description = jsonArticle["description"] as? String ?? ""
                 article.url = jsonArticle["url"] as? String ?? ""
@@ -117,35 +118,46 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return 70
     }
     
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return articles[section].title
-//    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let button = UIButton(type: .system)
-            button.setTitle(articles[section].title, for: .normal)
-            button.titleLabel?.lineBreakMode = .byWordWrapping
-            button.titleLabel?.numberOfLines = 0
-            button.backgroundColor = .systemBackground
-            button.addTarget(self, action: #selector(handleExpandClose), for: .touchUpInside)
-            button.tag = section
-        return button
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        if articles[section].opened == true {
+            return 2
+        } else {
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
+    enum CellType {
+        case titleCell, detailsCell
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! NewsTableViewCell
-        let section = articles[indexPath.section]
-        cell.descriptionText.text = section.description
-        
-        return cell
+        if indexPath.row == 0 {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: titleCellID) as? NewsTitleTableViewCell else { return UITableViewCell() }
+            let section = articles[indexPath.section]
+            cell.newsTitleLabel.text = section.title
+            return cell
+        } else {
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: detailsCellID) as? NewsDetailsTableViewCell else { return UITableViewCell() }
+            let section = articles[indexPath.section]
+            cell.descriptionLabel.text = section.description
+            return cell
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let section = IndexSet.init(integer: indexPath.section)
+
+        if articles[indexPath.section].opened == true {
+            articles[indexPath.section].opened = false
+            tableView.reloadSections(section, with: .none)
+        } else {
+            articles[indexPath.section].opened = true
+            tableView.reloadSections(section, with: .none)
+        }
     }
     
 }

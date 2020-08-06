@@ -19,6 +19,7 @@
 		9089166B24DA054C00D1C451 /* NewsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9089166A24DA054C00D1C451 /* NewsModel.swift */; };
 		9089166E24DA0DF800D1C451 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9089166D24DA0DF800D1C451 /* Extensions.swift */; };
 		9089169324DBBE3500D1C451 /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9089169224DBBE3500D1C451 /* NewsTableViewCell.swift */; };
+		9089169524DCB85700D1C451 /* NewsTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9089169424DCB85600D1C451 /* NewsTitleTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		9089166A24DA054C00D1C451 /* NewsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsModel.swift; sourceTree = "<group>"; };
 		9089166D24DA0DF800D1C451 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		9089169224DBBE3500D1C451 /* NewsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
+		9089169424DCB85600D1C451 /* NewsTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsTitleTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 		9089169124DBBDF500D1C451 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				9089169424DCB85600D1C451 /* NewsTitleTableViewCell.swift */,
 				9089169224DBBE3500D1C451 /* NewsTableViewCell.swift */,
 			);
 			path = TableViewCell;
@@ -318,6 +321,7 @@
 				9089166924DA051D00D1C451 /* NewsView.swift in Sources */,
 				9089163524DA010D00D1C451 /* SceneDelegate.swift in Sources */,
 				9089166E24DA0DF800D1C451 /* Extensions.swift in Sources */,
+				9089169524DCB85700D1C451 /* NewsTitleTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
