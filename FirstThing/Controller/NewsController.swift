@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -16,7 +17,7 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let titleCellID = "TitleCell"
     let detailsCellID = "DetailsCell"
     private let newsURL = "https://newsapi.org/v2/top-headlines?country=us&apiKey=e2f0b28b0f0146dcb2b9c2ce5c3142a7"
-    private var articles = [Articles]()
+    var articles = [Articles]()
 
 // MARK: - Init
     override func viewDidLoad() {
@@ -105,10 +106,6 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
 // MARK: - Selectors
     
-    @objc func handleExpandClose(button: UIButton) {
-        print(button.tag)
-    }
-    
 // MARK: - TableView Data Source
     func numberOfSections(in tableView: UITableView) -> Int {
         return articles.count
@@ -144,6 +141,13 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
             guard let cell = tableView.dequeueReusableCell(withIdentifier: detailsCellID) as? NewsDetailsTableViewCell else { return UITableViewCell() }
             let section = articles[indexPath.section]
             cell.descriptionLabel.text = section.description
+            
+            cell.readMoreAction = { sender in
+                let articleURL = URL(string: section.url)
+                let articleVC = SFSafariViewController(url: articleURL!)
+                self.present(articleVC, animated: true, completion: nil)
+            }
+
             return cell
         }
     }

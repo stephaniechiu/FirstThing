@@ -30,7 +30,7 @@ class NewsView: UIView {
         backgroundColor = .systemBackground
         
         setupLayout()
-        changeTimeOfDayTitle()
+//        changeTimeOfDayTitle()
     }
     
     required init(coder: NSCoder) {
