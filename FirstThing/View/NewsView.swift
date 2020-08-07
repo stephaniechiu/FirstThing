@@ -24,6 +24,8 @@ class NewsView: UIView {
         return title
     }()
     
+    let currentTime = Date()
+    
 // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)

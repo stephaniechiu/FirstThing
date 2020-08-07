@@ -14,9 +14,10 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
 // MARK: - Properties
     let newsView = NewsView()
     let newsTableView = UITableView()
+    let currentTime = Date()
     let titleCellID = "TitleCell"
     let detailsCellID = "DetailsCell"
-    private let newsURL = "https://newsapi.org/v2/top-headlines?country=us&apiKey=e2f0b28b0f0146dcb2b9c2ce5c3142a7"
+    let newsURL = "https://newsapi.org/v2/top-headlines?country=us&apiKey=e2f0b28b0f0146dcb2b9c2ce5c3142a7"
     var articles = [Articles]()
 
 // MARK: - Init
@@ -26,6 +27,7 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         setupNavigationController()
         setupLayout()
+        setupDateFormatter()
         setupTableView()
         getLatestNewsArticles()
     }
@@ -39,6 +41,12 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func setupLayout() {
         view.addSubview(newsTableView)
         newsTableView.anchor(top: newsView.firstThingTitle.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 50)
+    }
+    
+    func setupDateFormatter() {
+        let formatter = ISO8601DateFormatter()
+        let datetime = formatter.string(from: currentTime)
+        print("-------Current Time: \(datetime)--------")
     }
     
     func setupTableView() {
@@ -95,7 +103,6 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 article.publishedAt  = jsonArticle["publishedAt"] as? String ?? ""
 
                 articles.append(article)
-                print(articles)
             }
         } catch {
             print("Error: \(error)")
@@ -140,8 +147,28 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: detailsCellID) as? NewsDetailsTableViewCell else { return UITableViewCell() }
             let section = articles[indexPath.section]
-            cell.descriptionLabel.text = section.description
             
+            //Article description
+            cell.descriptionLabel.text = section.description
+        
+            //Time since article was published
+            let formatter = ISO8601DateFormatter()
+            let publishedTime = formatter.date(from: section.publishedAt) ?? currentTime
+            let timeSincePublished = Calendar.current.dateComponents([.minute, .hour], from: publishedTime, to: currentTime)
+            let minutes = timeSincePublished.minute
+            let hours = timeSincePublished.hour
+            
+            if minutes == 1 {
+                cell.lastUpdatedLabel.text = "\(minutes ?? 0) minute ago"
+            } else if minutes ?? 0 < 60 {
+                cell.lastUpdatedLabel.text = "\(minutes ?? 0) minutes ago"
+            } else if minutes ?? 1 == 60 || hours ?? 1 == 1 {
+                cell.lastUpdatedLabel.text = "\(hours ?? 0) hour ago"
+            } else if minutes! < 60 && hours ?? 1 > 1 {
+                cell.lastUpdatedLabel.text = "\(hours ?? 0) hours ago"
+            }
+            
+            //When user taps on "Read More", the full article will open within the app
             cell.readMoreAction = { sender in
                 let articleURL = URL(string: section.url)
                 let articleVC = SFSafariViewController(url: articleURL!)
