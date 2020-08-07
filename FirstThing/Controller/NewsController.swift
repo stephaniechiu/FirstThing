@@ -56,9 +56,19 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
         newsTableView.register(NewsDetailsTableViewCell.self, forCellReuseIdentifier: detailsCellID)
         newsTableView.estimatedRowHeight = 50
         newsTableView.rowHeight = UITableView.automaticDimension
+        
+        newsTableView.refreshControl = UIRefreshControl()
+        newsTableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+    }
+    
+    @objc func pullToRefresh() {
+        getLatestNewsArticles()
     }
     
     func getLatestNewsArticles() {
+        // Remove all articles before fetching data from API when pulling to refresh
+        articles.removeAll()
+        
         guard let newsURL = URL(string: newsURL) else {
             return
         }
@@ -74,6 +84,10 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
             // Parse JSON data
             if let data = data {
                 self.articles = self.parseJSONData(data: data)
+                
+                DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+                    self.newsTableView.refreshControl?.endRefreshing()
+                }
                 
                 // Reload newsTableView on main thread
                 OperationQueue.main.addOperation {
@@ -158,9 +172,9 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
             let minutes = timeSincePublished.minute
             let hours = timeSincePublished.hour
             
-            if minutes == 1 {
+            if minutes == 1  && hours ?? 0 < 1 {
                 cell.lastUpdatedLabel.text = "\(minutes ?? 0) minute ago"
-            } else if minutes ?? 0 < 60 {
+            } else if minutes ?? 0 < 60 && hours ?? 0 < 1 {
                 cell.lastUpdatedLabel.text = "\(minutes ?? 0) minutes ago"
             } else if minutes ?? 1 == 60 || hours ?? 1 == 1 {
                 cell.lastUpdatedLabel.text = "\(hours ?? 0) hour ago"
