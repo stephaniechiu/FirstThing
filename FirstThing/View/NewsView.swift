@@ -19,8 +19,18 @@ class NewsView: UIView {
     let firstThingTitle: UILabel = {
         let title = UILabel()
         title.textColor = .label
-        title.text = "First thing this"
         title.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+        
+        let currentTime = Date()
+        let hour = Calendar.current.component(.hour, from: currentTime)
+        if hour < 12 {
+            title.text = "First thing this morning"
+        } else if hour >= 12 && hour < 18 {
+            title.text = "First thing this afternoon"
+        } else if hour >= 18 && hour <= 24 {
+            title.text = "First thing this evening"
+        }
+        
         return title
     }()
     
@@ -30,7 +40,6 @@ class NewsView: UIView {
         backgroundColor = .systemBackground
         
         setupLayout()
-//        changeTimeOfDayTitle()
     }
     
     required init(coder: NSCoder) {
@@ -41,19 +50,5 @@ class NewsView: UIView {
     func setupLayout() {
         addSubview(firstThingTitle)
         firstThingTitle.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 15, paddingLeft: 15)
-    }
-    
-    func changeTimeOfDayTitle() {
-        var changeTimeOfDay = TimeOfDay.morning
-        switch changeTimeOfDay {
-        case .morning:
-            print("morning")
-        case .afternoon:
-            print("afternoon")
-        case .evening:
-            print("evening")
-        default:
-            print("Error: \(Error.self)")
-        }
     }
 }

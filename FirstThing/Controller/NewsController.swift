@@ -61,10 +61,6 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
         newsTableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
     }
     
-    @objc func pullToRefresh() {
-        getLatestNewsArticles()
-    }
-    
     func getLatestNewsArticles() {
         // Remove all articles before fetching data from API when pulling to refresh
         articles.removeAll()
@@ -104,7 +100,7 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         do {
             let jsonResult = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [String:AnyObject]
-            print(jsonResult!)
+//            print(jsonResult!)
             
             // Parse JSON data
             let jsonArticles = jsonResult?["articles"] as! [AnyObject]
@@ -126,6 +122,10 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
 
 // MARK: - Selectors
+    
+    @objc func pullToRefresh() {
+        getLatestNewsArticles()
+    }
     
 // MARK: - TableView Data Source
     func numberOfSections(in tableView: UITableView) -> Int {
