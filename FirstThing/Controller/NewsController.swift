@@ -8,8 +8,9 @@
 
 import UIKit
 import SafariServices
+import UserNotifications
 
-class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSource, UNUserNotificationCenterDelegate {
 
 // MARK: - Properties
     let newsView = NewsView()
@@ -19,6 +20,9 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let detailsCellID = "DetailsCell"
     let newsURL = "https://newsapi.org/v2/top-headlines?country=us&apiKey=e2f0b28b0f0146dcb2b9c2ce5c3142a7"
     var articles = [Articles]()
+//    let manager = LocalNotificationManager()
+    
+    let userNotificationCenter = UNUserNotificationCenter.current()
 
 // MARK: - Init
     override func viewDidLoad() {
@@ -30,6 +34,18 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
         setupDateFormatter()
         setupTableView()
         getLatestNewsArticles()
+        
+        userNotificationCenter.delegate = self
+        requestNotificationAuthorization()
+        sendNotification()
+        
+//        manager.notifications = [
+//            Notification(id: "reminder-1", title: "Remember the milk!", datetime: DateComponents(calendar: Calendar.current, year: 2021, month: 8, day: 7, hour: 22, minute: 9)),
+//            Notification(id: "reminder-2", title: "Ask Bob from accounting", datetime: DateComponents(calendar: Calendar.current, year: 2020, month: 8, day: 7, hour: 22, minute: 12)),
+//            Notification(id: "reminder-3", title: "Send postcard to mom", datetime: DateComponents(calendar: Calendar.current, year: 2019, month: 4, day: 22, hour: 17, minute: 2))
+//        ]
+//
+//        manager.schedule()
     }
 
 // MARK: - Helper Functions
@@ -56,10 +72,13 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
         newsTableView.register(NewsDetailsTableViewCell.self, forCellReuseIdentifier: detailsCellID)
         newsTableView.estimatedRowHeight = 50
         newsTableView.rowHeight = UITableView.automaticDimension
+        newsTableView.separatorStyle = .none
         
         newsTableView.refreshControl = UIRefreshControl()
         newsTableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
     }
+    
+// MARK: - API Call
     
     func getLatestNewsArticles() {
         // Remove all articles before fetching data from API when pulling to refresh
@@ -120,6 +139,49 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         return articles
     }
+    
+// MARK: - Local Notification
+    
+    func requestNotificationAuthorization() {
+            let authOptions = UNAuthorizationOptions.init(arrayLiteral: .alert, .badge, .sound)
+            
+            //Ask for user permission to send notifications
+            self.userNotificationCenter.requestAuthorization(options: authOptions) { (success, error) in
+                if let error = error {
+                    print("Error: ", error)
+                }
+            }
+        }
+
+        func sendNotification() {
+            let notificationContent = UNMutableNotificationContent()
+
+            notificationContent.title = "Good morning!"
+            notificationContent.body = "Here's what you missed out on last night..."
+    //        notificationContent.badge = NSNumber(value: 3)
+            
+            var dateComponents = DateComponents()
+            dateComponents.hour = 19
+            dateComponents.minute = 27
+            
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+            
+            let request = UNNotificationRequest(identifier: "testNotification", content: notificationContent, trigger: trigger)
+            
+            userNotificationCenter.add(request) { (error) in
+                if let error = error {
+                    print("Notification Error: ", error)
+                }
+            }
+        }
+        
+        func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+            completionHandler()
+        }
+
+        func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+            completionHandler([.alert, .badge, .sound])
+        }
 
 // MARK: - Selectors
     

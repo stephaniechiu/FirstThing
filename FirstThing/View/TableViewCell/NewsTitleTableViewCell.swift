@@ -20,7 +20,7 @@ class NewsTitleTableViewCell: UITableViewCell {
         setupCellLayout()
         
         addSubview(newsTitleLabel)
-        newsTitleLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
+        newsTitleLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 20, paddingBottom: 20, paddingRight: 20)
 
         }
         
@@ -33,7 +33,7 @@ class NewsTitleTableViewCell: UITableViewCell {
         newsTitleLabel.numberOfLines = 0
         newsTitleLabel.lineBreakMode = .byWordWrapping
         newsTitleLabel.textColor = .label
-        newsTitleLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 14)
+        newsTitleLabel.font = UIFont(name: "HelveticaNeue-Bold", size: 16)
     }
     
 }

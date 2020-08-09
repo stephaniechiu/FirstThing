@@ -37,7 +37,7 @@ class NewsDetailsTableViewCell: UITableViewCell {
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = .byWordWrapping
         descriptionLabel.textColor = .label
-        descriptionLabel.font = UIFont(name: "HelveticaNeue", size: 12)
+        descriptionLabel.font = UIFont(name: "HelveticaNeue", size: 14)
         
         addSubview(descriptionLabel)
         descriptionLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 40, paddingRight: 20)

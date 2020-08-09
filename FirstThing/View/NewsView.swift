@@ -19,7 +19,7 @@ class NewsView: UIView {
     let firstThingTitle: UILabel = {
         let title = UILabel()
         title.textColor = .label
-        title.font = UIFont(name: "HelveticaNeue-Bold", size: 20)
+        title.font = UIFont(name: "HelveticaNeue-Bold", size: 24)
         
         let currentTime = Date()
         let hour = Calendar.current.component(.hour, from: currentTime)
