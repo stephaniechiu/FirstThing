@@ -18,12 +18,12 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let currentTime = Date()
     let titleCellID = "TitleCell"
     let detailsCellID = "DetailsCell"
-    let newsURL = "https://newsapi.org/v2/top-headlines?country=us&apiKey=e2f0b28b0f0146dcb2b9c2ce5c3142a7"
+    let newsURL = "https://newsapi.org/v2/everything?pageSize=10&q=covid&apiKey=e2f0b28b0f0146dcb2b9c2ce5c3142a7"
+    let defaults = UserDefaults.standard
     var articles = [Articles]()
-//    let manager = LocalNotificationManager()
     
     let userNotificationCenter = UNUserNotificationCenter.current()
-
+    
 // MARK: - Init
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,14 +38,6 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
         userNotificationCenter.delegate = self
         requestNotificationAuthorization()
         sendNotification()
-        
-//        manager.notifications = [
-//            Notification(id: "reminder-1", title: "Remember the milk!", datetime: DateComponents(calendar: Calendar.current, year: 2021, month: 8, day: 7, hour: 22, minute: 9)),
-//            Notification(id: "reminder-2", title: "Ask Bob from accounting", datetime: DateComponents(calendar: Calendar.current, year: 2020, month: 8, day: 7, hour: 22, minute: 12)),
-//            Notification(id: "reminder-3", title: "Send postcard to mom", datetime: DateComponents(calendar: Calendar.current, year: 2019, month: 4, day: 22, hour: 17, minute: 2))
-//        ]
-//
-//        manager.schedule()
     }
 
 // MARK: - Helper Functions
@@ -77,7 +69,7 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
         newsTableView.refreshControl = UIRefreshControl()
         newsTableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
     }
-    
+      
 // MARK: - API Call
     
     func getLatestNewsArticles() {
