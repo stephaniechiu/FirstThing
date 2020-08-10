@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9040441424DE631C0075656B /* NotificationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9040441324DE631C0075656B /* NotificationModel.swift */; };
+		9040441824DFB09C0075656B /* OnboardingCategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9040441724DFB09C0075656B /* OnboardingCategoryModel.swift */; };
+		9040441A24E0E2400075656B /* OnboardingCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9040441924E0E2400075656B /* OnboardingCategoryView.swift */; };
+		9040441C24E0E25D0075656B /* OnboardingCategoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9040441B24E0E25D0075656B /* OnboardingCategoryController.swift */; };
+		9040442124E11FB30075656B /* CategoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9040442024E11FB30075656B /* CategoryCollectionViewCell.swift */; };
 		9089163324DA010D00D1C451 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9089163224DA010D00D1C451 /* AppDelegate.swift */; };
 		9089163524DA010D00D1C451 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9089163424DA010D00D1C451 /* SceneDelegate.swift */; };
 		9089163724DA010D00D1C451 /* NewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9089163624DA010D00D1C451 /* NewsController.swift */; };
@@ -42,7 +45,10 @@
 
 /* Begin PBXFileReference section */
 		9040441024DE3F3C0075656B /* FirstThing.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FirstThing.entitlements; sourceTree = "<group>"; };
-		9040441324DE631C0075656B /* NotificationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationModel.swift; sourceTree = "<group>"; };
+		9040441724DFB09C0075656B /* OnboardingCategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCategoryModel.swift; sourceTree = "<group>"; };
+		9040441924E0E2400075656B /* OnboardingCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCategoryView.swift; sourceTree = "<group>"; };
+		9040441B24E0E25D0075656B /* OnboardingCategoryController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCategoryController.swift; sourceTree = "<group>"; };
+		9040442024E11FB30075656B /* CategoryCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		9089162F24DA010D00D1C451 /* FirstThing.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FirstThing.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9089163224DA010D00D1C451 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9089163424DA010D00D1C451 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +95,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9040441F24E11F900075656B /* CategoryCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				9040442024E11FB30075656B /* CategoryCollectionViewCell.swift */,
+			);
+			path = CategoryCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		9089162624DA010D00D1C451 = {
 			isa = PBXGroup;
 			children = (
@@ -149,7 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				9089166A24DA054C00D1C451 /* NewsModel.swift */,
-				9040441324DE631C0075656B /* NotificationModel.swift */,
+				9040441724DFB09C0075656B /* OnboardingCategoryModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -158,6 +172,8 @@
 			isa = PBXGroup;
 			children = (
 				9089166824DA051D00D1C451 /* NewsView.swift */,
+				9040441924E0E2400075656B /* OnboardingCategoryView.swift */,
+				9040441F24E11F900075656B /* CategoryCollectionViewCell */,
 				9089169124DBBDF500D1C451 /* TableViewCell */,
 			);
 			path = View;
@@ -167,6 +183,7 @@
 			isa = PBXGroup;
 			children = (
 				9089163624DA010D00D1C451 /* NewsController.swift */,
+				9040441B24E0E25D0075656B /* OnboardingCategoryController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -319,14 +336,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				9089166B24DA054C00D1C451 /* NewsModel.swift in Sources */,
+				9040441824DFB09C0075656B /* OnboardingCategoryModel.swift in Sources */,
 				9089163724DA010D00D1C451 /* NewsController.swift in Sources */,
+				9040441C24E0E25D0075656B /* OnboardingCategoryController.swift in Sources */,
 				9089169324DBBE3500D1C451 /* NewsTableViewCell.swift in Sources */,
 				9089163D24DA010D00D1C451 /* FirstThing.xcdatamodeld in Sources */,
 				9089163324DA010D00D1C451 /* AppDelegate.swift in Sources */,
+				9040441A24E0E2400075656B /* OnboardingCategoryView.swift in Sources */,
 				9089166924DA051D00D1C451 /* NewsView.swift in Sources */,
 				9089163524DA010D00D1C451 /* SceneDelegate.swift in Sources */,
+				9040442124E11FB30075656B /* CategoryCollectionViewCell.swift in Sources */,
 				9089166E24DA0DF800D1C451 /* Extensions.swift in Sources */,
-				9040441424DE631C0075656B /* NotificationModel.swift in Sources */,
 				9089169524DCB85700D1C451 /* NewsTitleTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

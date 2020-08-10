@@ -12,14 +12,10 @@ class NewsView: UIView {
     
 // MARK: - Properties
     
-    enum TimeOfDay {
-        case morning, afternoon, evening
-    }
-    
     let firstThingTitle: UILabel = {
         let title = UILabel()
         title.textColor = .label
-        title.font = UIFont(name: "HelveticaNeue-Bold", size: 24)
+        title.font = UIFont(name: "AvenirNext-Bold", size: 24)
         
         let currentTime = Date()
         let hour = Calendar.current.component(.hour, from: currentTime)

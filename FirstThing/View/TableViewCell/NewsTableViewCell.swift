@@ -37,21 +37,21 @@ class NewsDetailsTableViewCell: UITableViewCell {
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = .byWordWrapping
         descriptionLabel.textColor = .label
-        descriptionLabel.font = UIFont(name: "HelveticaNeue", size: 14)
+        descriptionLabel.font = UIFont(name: "AvenirNext", size: 14)
         
         addSubview(descriptionLabel)
         descriptionLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 10, paddingLeft: 40, paddingRight: 20)
         
         //How long ago since the article was published
         lastUpdatedLabel.textColor = .systemGray
-        lastUpdatedLabel.font = UIFont(name: "HelveticaNeue", size: 12)
+        lastUpdatedLabel.font = UIFont(name: "AvenirNext", size: 12)
         
         addSubview(lastUpdatedLabel)
         lastUpdatedLabel.anchor(top: descriptionLabel.bottomAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingBottom: 10, paddingRight: 40)
         
         //Users can click "Read More" to read the article within the app
         readMoreButton.setTitle("Read More", for: .normal)
-        readMoreButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 12)
+        readMoreButton.titleLabel?.font = UIFont(name: "AvenirNext-Bold", size: 12)
         readMoreButton.setTitleColor(.label, for: .normal)
         readMoreButton.addTarget(self, action: #selector(openURL(sender:)), for: .touchUpInside)
         
