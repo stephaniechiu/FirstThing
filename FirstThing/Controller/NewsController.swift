@@ -18,13 +18,28 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let currentTime = Date()
     let titleCellID = "TitleCell"
     let detailsCellID = "DetailsCell"
-    let newsURL = "https://newsapi.org/v2/everything?pageSize=10&q=covid&apiKey=e2f0b28b0f0146dcb2b9c2ce5c3142a7"
-    let defaults = UserDefaults.standard
+    let sectionHeaderID = "SectionHeader"
+    let categoryHeaders = ["Top Headlines", "Fashion", "Tech"]
+    let newsURL = "https://newsapi.org/v2/top-headlines?country=us&apiKey=e2f0b28b0f0146dcb2b9c2ce5c3142a7"
     var articles = [Articles]()
+    var tableViewData = [[Articles]]()
+    var titleHeader = ""
     
     let userNotificationCenter = UNUserNotificationCenter.current()
     
 // MARK: - Init
+    
+    //Initialize onboarding view controllers (OnboardingCategoryController)
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if Onboarding.shared.isNewUser() {
+            let onboardingCategoryController = OnboardingCategoryController()
+            onboardingCategoryController.modalPresentationStyle = .fullScreen
+            present(onboardingCategoryController, animated: true, completion: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view = newsView
@@ -47,6 +62,9 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func setupLayout() {
+        newsView.gradientBackground.frame = view.bounds
+        view.layer.insertSublayer(newsView.gradientBackground, at: 0)
+        
         view.addSubview(newsTableView)
         newsTableView.anchor(top: newsView.firstThingTitle.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 50)
     }
@@ -66,6 +84,7 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
         newsTableView.rowHeight = UITableView.automaticDimension
         newsTableView.separatorStyle = .none
         
+        //Pull to refresh
         newsTableView.refreshControl = UIRefreshControl()
         newsTableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
     }
@@ -125,10 +144,11 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
                 articles.append(article)
             }
+            tableViewData.append(articles)
+            print(tableViewData)
         } catch {
             print("Error: \(error)")
         }
-        
         return articles
     }
     
@@ -182,6 +202,15 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
 // MARK: - TableView Data Source
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return tableViewData.count
+    }
+    
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return categoryHeaders[section]
+//    }
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return articles.count
     }
@@ -200,10 +229,6 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
-    }
-    
-    enum CellType {
-        case titleCell, detailsCell
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -257,6 +282,25 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
             articles[indexPath.section].opened = true
             tableView.reloadSections(section, with: .none)
         }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        titleHeader = categoryHeaders[indexPath.section]
+        if titleHeader == "Top Headlines" {
+            print("top headlines")
+        }
     }
     
+}
+
+class Onboarding {
+    static let shared = Onboarding()
+    
+    func isNewUser() -> Bool {
+        //Returns true when app first launches
+        return !UserDefaults.standard.bool(forKey: "isNewUser")
+    }
+    
+    func setIsNotNewUser() {
+        UserDefaults.standard.set(true, forKey: "isNewUser")
+    }
 }

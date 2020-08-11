@@ -33,7 +33,7 @@ class NewsTitleTableViewCell: UITableViewCell {
         newsTitleLabel.numberOfLines = 0
         newsTitleLabel.lineBreakMode = .byWordWrapping
         newsTitleLabel.textColor = .label
-        newsTitleLabel.font = UIFont(name: "AvenirNext-Bold", size: 20)
+        newsTitleLabel.font = UIFont(name: "AvenirNext", size: 18)
     }
     
 }

@@ -23,7 +23,7 @@ class CategoryCollectionViewCell: UICollectionViewCell {
         self.layer.cornerRadius = 13
         
         addSubview(categoryLabel)
-        categoryLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 10, paddingBottom: 0, paddingRight: 10)
+        categoryLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 0, paddingLeft: 5, paddingBottom: 0, paddingRight: 5)
     }
     
     required init?(coder aDecoder: NSCoder) {

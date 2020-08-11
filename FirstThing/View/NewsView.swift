@@ -30,10 +30,18 @@ class NewsView: UIView {
         return title
     }()
     
+    let gradientBackground: CAGradientLayer = {
+       let gradient = CAGradientLayer()
+        gradient.colors = [UIColor.purple.cgColor, UIColor.cyan.cgColor]
+        gradient.locations = [0, 1]
+        return gradient
+    }()
+    
 // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .systemBackground
+//        gradientBackground.frame = bounds
         
         setupLayout()
     }
@@ -44,6 +52,9 @@ class NewsView: UIView {
     
 // MARK: - Helper Functions
     func setupLayout() {
+//        layer.addSublayer(gradientBackground)
+//        layer.insertSublayer(gradientBackground, at: 0)
+        
         addSubview(firstThingTitle)
         firstThingTitle.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 15, paddingLeft: 15)
     }
