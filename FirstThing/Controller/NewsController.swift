@@ -16,9 +16,6 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let newsView = NewsView()
     let newsTableView = UITableView()
     let currentTime = Date()
-    let titleCellID = "TitleCell"
-    let detailsCellID = "DetailsCell"
-    let sectionHeaderID = "SectionHeader"
     let categoryHeaders = ["Top Headlines", "Fashion", "Tech"]
     let newsURL = "https://newsapi.org/v2/top-headlines?country=us&apiKey=e2f0b28b0f0146dcb2b9c2ce5c3142a7"
     var articles = [Articles]()
@@ -78,8 +75,8 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func setupTableView() {
         newsTableView.dataSource = self
         newsTableView.delegate = self
-        newsTableView.register(NewsTitleTableViewCell.self, forCellReuseIdentifier: titleCellID)
-        newsTableView.register(NewsDetailsTableViewCell.self, forCellReuseIdentifier: detailsCellID)
+        newsTableView.register(NewsTitleTableViewCell.self, forCellReuseIdentifier: Cell.titleCellID)
+        newsTableView.register(NewsDetailsTableViewCell.self, forCellReuseIdentifier: Cell.detailsCellID)
         newsTableView.estimatedRowHeight = 50
         newsTableView.rowHeight = UITableView.automaticDimension
         newsTableView.separatorStyle = .none
@@ -90,7 +87,7 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
       
 // MARK: - API Call
-    
+    //Create view model > api call. Create delegate (ex apidelegate), update with data
     func getLatestNewsArticles() {
         // Remove all articles before fetching data from API when pulling to refresh
         articles.removeAll()
@@ -126,6 +123,9 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func parseJSONData(data: Data) -> [Articles] {
+        //Can separate to 2 methods - deserialize data, create model based on deserialized data. Can test that the parsing is parsing like the right title
+        //Method should have only 1 responsiblity
+        
         var articles = [Articles]()
         
         do {
@@ -144,8 +144,8 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
                 articles.append(article)
             }
-            tableViewData.append(articles)
-            print(tableViewData)
+//            tableViewData.append(articles)
+//            print(tableViewData)
         } catch {
             print("Error: \(error)")
         }
@@ -233,12 +233,12 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: titleCellID) as? NewsTitleTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Cell.titleCellID) as? NewsTitleTableViewCell else { return UITableViewCell() }
             let section = articles[indexPath.section]
             cell.newsTitleLabel.text = section.title
             return cell
         } else {
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: detailsCellID) as? NewsDetailsTableViewCell else { return UITableViewCell() }
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: Cell.detailsCellID) as? NewsDetailsTableViewCell else { return UITableViewCell() }
             let section = articles[indexPath.section]
             
             //Article description
@@ -283,11 +283,11 @@ class NewsController: UIViewController, UITableViewDelegate, UITableViewDataSour
             tableView.reloadSections(section, with: .none)
         }
         
-        tableView.deselectRow(at: indexPath, animated: true)
-        titleHeader = categoryHeaders[indexPath.section]
-        if titleHeader == "Top Headlines" {
-            print("top headlines")
-        }
+//        tableView.deselectRow(at: indexPath, animated: true)
+//        titleHeader = categoryHeaders[indexPath.section]
+//        if titleHeader == "Top Headlines" {
+//            print("top headlines")
+//        }
     }
     
 }

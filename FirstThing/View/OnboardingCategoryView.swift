@@ -22,8 +22,8 @@ class OnboardingCategoryView: UIView {
         return title
     }()
     
-    var skipButton = UIView.actionButton(backgroundColor: UIColor.systemGray6, textColor: UIColor.label, text: "Skip")
-    var continueButton = UIView.actionButton(backgroundColor: UIColor.systemGray, textColor: UIColor.label, text: "Continue")
+    var skipButton = UIView.actionButton(backgroundColor: .systemGray6, textColor: UIColor.label, text: "Skip")
+    var continueButton = UIView.actionButton(backgroundColor: #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1), textColor: .white, text: "Continue")
     var bottomStackView: UIStackView
     
 // MARK: - Init
@@ -46,7 +46,7 @@ class OnboardingCategoryView: UIView {
         backgroundColor = .systemBackground
         
         addSubview(onboardingTitle)
-        onboardingTitle.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 10, paddingRight: 10)
+        onboardingTitle.anchor(top: safeAreaLayoutGuide.topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 20, paddingLeft: 15, paddingRight: 15)
 
         addSubview(bottomStackView)
         bottomStackView.anchor(left: leftAnchor, bottom: safeAreaLayoutGuide.bottomAnchor, right: rightAnchor, paddingLeft: 10, paddingBottom: 5, paddingRight: 10)

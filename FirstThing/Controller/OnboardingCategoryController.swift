@@ -13,14 +13,15 @@ class OnboardingCategoryController: UIViewController, UICollectionViewDataSource
 // MARK: - Properties
     let onboardingCategoryView = OnboardingCategoryView()
     var cellReuseIdentifier = "CategoryCell"
-//    var category: [Category] = []
-    let category = ["#Technology", "#Fashion", "#Covid"]
+    var category: [Category] = []
+//    let category = ["#Technology", "#Fashion", "#Covid"]
     let defaults = UserDefaults.standard
     let defaultNewsURL = "https://newsapi.org/v2/top-headlines?country=us&apiKey=e2f0b28b0f0146dcb2b9c2ce5c3142a7"
     let defaultKey = "prefersAllCategories"
+    
     let collectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
-        viewLayout.sectionInset = UIEdgeInsets(top: 20, left: 5, bottom: 10, right: 5)
+        viewLayout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 10, right: 20)
         viewLayout.itemSize = CGSize(width: 100, height: 50)
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: viewLayout)
@@ -42,7 +43,7 @@ class OnboardingCategoryController: UIViewController, UICollectionViewDataSource
         saveUserDefaults()
         checkForCategoryPreference()
         
-//        category = createCategory()
+        category = fetchCategoryURL()
     }
     
 // MARK: - Helper Functions
@@ -117,9 +118,9 @@ class OnboardingCategoryController: UIViewController, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellReuseIdentifier, for: indexPath) as! CategoryCollectionViewCell
-        cell.categoryLabel.text = category[indexPath.row]
+        cell.categoryLabel.text = category[indexPath.row].category
         return cell
-    }
+    } 
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize.init(width: view.frame.width, height: 250)
@@ -128,8 +129,16 @@ class OnboardingCategoryController: UIViewController, UICollectionViewDataSource
 // MARK: - CollectionView Delegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) {
-            print(category[indexPath.row])
-            cell.backgroundColor = #colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)
+//            var defaultCategory = [Category]()
+//            defaultCategory.append(category[indexPath.row])
+//
+//            defaults.set(defaultCategory, forKey: defaultKey)
+            cell.backgroundColor = #colorLiteral(red: 0.9686274529, green: 0.78039217, blue: 0.3450980484, alpha: 1)
+//
+//            print(category[indexPath.row].category)
+//            print(defaultCategory)
+//        } else {
+//            defaults.set(defaultNewsURL, forKey: defaultKey)
         }
     }
     
